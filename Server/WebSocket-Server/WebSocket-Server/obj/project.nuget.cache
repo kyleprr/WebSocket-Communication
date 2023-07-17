@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UZD65xouNNDrwO4xMFh+2FBFpBGbUPtQAuBlOTso8eB/TnsBV+BkT1wHj6CrIVfPs+W2AnrfPDkZbPJ8goQk1A==",
+  "dgSpecHash": "qW9ZCBtO8fjm4WTkVWFKl/OH3ZyM7FfRu7IbW2L8wPcx1NbAAeMkUib2P/e9C56op850IiN++E+luikB/GVBCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kyle Pereira\\Desktop\\WebSocket-Server\\WebSocket-Server\\WebSocket-Server.csproj",
+  "projectFilePath": "C:\\Users\\Kyle Pereira\\Desktop\\WebSocket-Communication\\Server\\WebSocket-Server\\WebSocket-Server\\WebSocket-Server.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
