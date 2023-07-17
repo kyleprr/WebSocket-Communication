@@ -5,7 +5,7 @@ async def connect_to_server():
     uri = "ws://localhost:1234/"
     async with websockets.connect(uri) as websocket:
         while True:
-            message = input("Enter a message to send to the server (or 'exit' to quit): ")
+            message = input("Enter a request to send to the server (or 'exit' to quit): ")
             if message == "exit":
                 break
             
