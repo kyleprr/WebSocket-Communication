@@ -84,49 +84,58 @@ namespace WebSocket_Server
         {
             var buffer = new byte[BufferSize];
 
-            while (webSocket.State == WebSocketState.Open) // Enter a loop that runs as long as the WebSocket connection is open
+            try
             {
-                var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None); // Receive data from the client
 
-                if (receiveResult.MessageType == WebSocketMessageType.Close) // Close connection if close message received
+                while (webSocket.State == WebSocketState.Open) // Enter a loop that runs as long as the WebSocket connection is open
                 {
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by client", CancellationToken.None);
-                    WebSocket removedSocket;
-                    Clients.TryRemove(clientId, out removedSocket);
-                    Console.WriteLine($"Client disconnected: Client #{clientId}");
-                }
-                else // If the received message type is data
-                {
-                    var message = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count); // Extract the received message from the buffer
-                    Console.WriteLine($"Received from Client #{clientId}: {message}");
+                    var receiveResult = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None); // Receive data from the client
 
-                    CommandType commandType = GetCommandType(message); // Get the command type from the message
-
-                    switch (commandType)
+                    if (receiveResult.MessageType == WebSocketMessageType.Close) // Close connection if close message received
                     {
-                        case CommandType.A:
-                            // Handle Command A
-                            SendDataAsync(webSocket, "{\"data\":{\"id\":1,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
-                            break;
-                        case CommandType.B:
-                            // Handle Command B
-                            SendDataAsync(webSocket, "{\"data\":{\"id\":2,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
-                            break;
-                        case CommandType.C:
-                            // Handle Command C
-                            SendDataAsync(webSocket, "{\"data\":{\"id\":3,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
-                            break;
-                        case CommandType.Unknown:
-                            // Unknown command
-                            SendDataAsync(webSocket, "{\"statusCode\":404,\"error\":\"Not Found\",\"message\":\"Invalid Request\",\"request\":\"Return Command\"}");
-                            break;
+                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by client", CancellationToken.None);
+                        WebSocket removedSocket;
+                        Clients.TryRemove(clientId, out removedSocket);
+                        Console.WriteLine($"Client disconnected: Client #{clientId}");
                     }
+                    else // If the received message type is data
+                    {
+                        var message = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count); // Extract the received message from the buffer
+                        Console.WriteLine($"Received from Client #{clientId}: {message}");
 
+                        CommandType commandType = GetCommandType(message); // Get the command type from the message
+
+                        switch (commandType)
+                        {
+                            case CommandType.A:
+                                // Handle Command A
+                                SendDataAsync(webSocket, "{\"data\":{\"id\":1,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
+                                break;
+                            case CommandType.B:
+                                // Handle Command B
+                                SendDataAsync(webSocket, "{\"data\":{\"id\":2,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
+                                break;
+                            case CommandType.C:
+                                // Handle Command C
+                                SendDataAsync(webSocket, "{\"data\":{\"id\":3,\"firstName\":\"Kyle\",\"lastName\":\"Pereira\"}}");
+                                break;
+                            case CommandType.Unknown:
+                                // Unknown command
+                                SendDataAsync(webSocket, "{\"statusCode\":404,\"error\":\"Not Found\",\"message\":\"Invalid Request\",\"request\":\"Return Command\"}");
+                                break;
+                        }
+
+                    }
                 }
             }
+            catch (WebSocketException ex)
+            {
+                Console.WriteLine($"WebSocket Error: {ex.Message}");
+                WebSocket removedSocket;
+                Clients.TryRemove(clientId, out removedSocket);
+                Console.WriteLine($"Client disconnected: Client #{clientId}");
+            }
         }
-
-
 
         private static CommandType GetCommandType(string message)
         {
