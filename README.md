@@ -11,4 +11,4 @@ Progress:
 
 | Feature | Progress | Started |Required? |
 |-------------|------|-------|------------|
-| `C# Server` | Server created and active. Many improvements can be made | `false` | Yes |
+| `C# Server` | Server created and active. Many improvements can be made | `true` | Yes |
