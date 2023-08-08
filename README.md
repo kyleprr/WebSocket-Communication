@@ -7,3 +7,8 @@ Progress:
 - [ ] Python Client
 - [ ] Flutter Client
 - [ ] ESP32 Client 
+
+
+| Feature | Description                                              | Type   | Default | Required? |
+|-------- |----------------------------------------------------------|--------|---------|-----------|
+| `C# Server` | Enables to define custom backend and frontend templates. | `bool` | `false` | No        |
