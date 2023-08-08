@@ -9,6 +9,6 @@ Progress:
 - [ ] ESP32 Client 
 
 
-| Feature | Description                                              | Type   | Default | Required? |
-|-------- |----------------------------------------------------------|--------|---------|-----------|
-| `C# Server` | Enables to define custom backend and frontend templates. | `bool` | `false` | No        |
+| Feature | Progress | Started |Required? |
+|-------------|------|-------|------------|
+| `C# Server` | Server active | `false` | Yes |
